@@ -1,1 +1,0 @@
-$("#run").click(() => alert("test));
