@@ -47,7 +47,7 @@
               xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
             },
             success: function(data){
-              alert(data.displayName);
+              console.log(data.displayName);
             },
             error: function(data){
               console.log(data);
