@@ -15,12 +15,10 @@ var url_auth = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize' 
   '&redirect_uri=' + encodeURIComponent(location.protocol + "//" + location.host + location.pathname) +
   '&scope=' + encodeURIComponent(scope);
 
-$(document).ready(function () {
-
+$(function () {
   //access_tokenの取得
   if (location.hash) {
     var hashary = location.hash.substr(1).split('&');
-
     $.each(hashary, function (i, v) {
       var ary = v.split('=');
       if (ary[0] == 'access_token') {
@@ -29,25 +27,33 @@ $(document).ready(function () {
         return false;
       }
     });
+  }
+
+  $(document).ready(function () {
+    location.href = url_auth;
 
     //API呼び出し
-    $.ajax({
-      url: 'https://graph.microsoft.com/v1.0/me',
-      type: 'GET',
-      beforeSend: function (xhr) {
-        xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
-      },
-      success: function (data) {
-        alert(data.surname);
-      },
-      error: function (data) {
-        //console.log(data);
-      }
+    $('#exec').click(function () {
+      //alert(access_token); //確認用
+      $.ajax({
+        url: 'https://graph.microsoft.com/v1.0/me',
+        type: 'GET',
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
+        },
+        success: function (data) {
+          //console.log(data); //確認用
+          alert(data.displayName);
+        },
+        error: function (data) {
+          console.log(data);
+        }
+      });
     });
-  };
-})
-
-    </script>
+  });
+});
+      
+</script>
   </head>
   <body>
     <div id="contents">
