@@ -184,3 +184,50 @@ shpStampImage.top = y;
 await context.sync();
 });
 }
+
+      var access_token;
+      var client_id = '2e1be2b2-01f2-466e-84cd-65f2b689fbce';
+      var scope = 'https://graph.microsoft.com/user.read';
+      var url_auth = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize' +
+                     '?response_type=token' +
+                     '&client_id=' + client_id +
+                     '&redirect_uri=' + encodeURIComponent(location.protocol + "//" + location.host + location.pathname) +
+                     '&scope=' + encodeURIComponent(scope);
+       
+      $(function(){
+        //access_tokenの取得
+        if(location.hash){
+          var hashary = location.hash.substr(1).split('&');
+          $.each(hashary,function(i, v){
+            var ary = v.split('=');
+            if(ary[0] == 'access_token'){
+              access_token = ary[1];
+              $('#exec').prop('disabled', false);
+              return false;
+            }
+          });
+        }
+         
+        $('#login').click(function(){
+          location.href = url_auth;
+        });
+         
+        //API呼び出し
+        $('#exec').click(function(){
+          //alert(access_token); //確認用
+          $.ajax({
+            url: 'https://graph.microsoft.com/v1.0/me',
+            type: 'GET',
+            beforeSend: function(xhr){
+              xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
+            },
+            success: function(data){
+              //console.log(data); //確認用
+              alert(data.displayName);
+            },
+            error: function(data){
+              console.log(data);
+            }
+          });
+        });
+      });
