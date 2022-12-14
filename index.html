@@ -10,11 +10,6 @@
     <script src="https://unpkg.com/@microsoft/office-js-helpers@0.5.0/dist/office.helpers.min.js"></script>
     <script>
 
-      var authenticator;
-      var client_id = "507591d2-cfb9-4a52-bdf6-6053cfcc3ff3";
-      var redirect_url = "https://mikiyks.github.io/inkan/";
-      var scope = "https://graph.microsoft.com/user.read";
-      var access_token;
        
       Office.initialize = function(reason){
         if(OfficeHelpers.Authenticator.isAuthDialog()) return;
@@ -25,6 +20,13 @@
          
         //access_token取得
         $("#login").click(function(){
+          
+      var authenticator;
+      var client_id = "507591d2-cfb9-4a52-bdf6-6053cfcc3ff3";
+      var redirect_url = "https://mikiyks.github.io/inkan/";
+      var scope = "https://graph.microsoft.com/user.read";
+      var access_token;
+          
           authenticator.endpoints.registerMicrosoftAuth(client_id, {
             redirectUrl: redirect_url,
             scope: scope
