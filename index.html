@@ -15,10 +15,7 @@
                      '&redirect_uri=' + encodeURIComponent(location.protocol + "//" + location.host + location.pathname) +
                      '&scope=' + encodeURIComponent(scope);
        
-
-         
-        $('#login').click(function(){
-
+      $(function(){
         //access_tokenの取得
         if(location.hash){
           var hashary = location.hash.substr(1).split('&');
@@ -30,7 +27,10 @@
               return false;
             }
           });
-          
+        }
+         
+        $('#login').click(function(){
+          location.href = url_auth;
         });
          
         //API呼び出し
