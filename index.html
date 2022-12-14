@@ -3,26 +3,55 @@
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <title>Office JavaScript API Helpers Sample</title>
+    <title>v2.0 endpoint Sample</title>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.1.1.min.js"></script>
-    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
-    <script src="https://unpkg.com/core-js/client/core.min.js"></script>
-    <script src="https://unpkg.com/@microsoft/office-js-helpers@0.5.0/dist/office.helpers.min.js"></script>
     <script>
-$("#login").click(() => authenticator);
-
-var authenticator = new OfficeHelpers.Authenticator();
-authenticator.endpoints.registerMicrosoftAuth("507591d2-cfb9-4a52-bdf6-6053cfcc3ff3", {
-  redirectUrl: "https://mikiyks.github.io/inkan/",
-  scope: "https://graph.microsoft.com/user.read"
-});
-authenticator
-  .authenticate(OfficeHelpers.DefaultEndpoints.Microsoft)
-  .then(function(token) {
-    /* Microsoft Token */
-  })
-  .catch(OfficeHelpers.Utilities.log);
-
+      var access_token;
+      var client_id = '507591d2-cfb9-4a52-bdf6-6053cfcc3ff3';
+      var scope = 'https://graph.microsoft.com/user.read';
+      var url_auth = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize' +
+                     '?response_type=token' +
+                     '&client_id=' + client_id +
+                     '&redirect_uri=' + encodeURIComponent(location.protocol + "//" + location.host + location.pathname) +
+                     '&scope=' + encodeURIComponent(scope);
+       
+      $(function(){
+        //access_tokenの取得
+        if(location.hash){
+          var hashary = location.hash.substr(1).split('&');
+          $.each(hashary,function(i, v){
+            var ary = v.split('=');
+            if(ary[0] == 'access_token'){
+              access_token = ary[1];
+              $('#exec').prop('disabled', false);
+              return false;
+            }
+          });
+        }
+         
+        $('#login').click(function(){
+          location.href = url_auth;
+        });
+         
+        //API呼び出し
+        $('#exec').click(function(){
+          //alert(access_token); //確認用
+          $.ajax({
+            url: 'https://graph.microsoft.com/v1.0/me',
+            type: 'GET',
+            beforeSend: function(xhr){
+              xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
+            },
+            success: function(data){
+              //console.log(data); //確認用
+              alert(data.displayName);
+            },
+            error: function(data){
+              console.log(data);
+            }
+          });
+        });
+      });
     </script>
   </head>
   <body>
