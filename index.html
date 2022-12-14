@@ -6,54 +6,53 @@
     <title>v2.0 endpoint Sample</title>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.1.1.min.js"></script>
     <script>
-var access_token;
-var client_id = '2e1be2b2-01f2-466e-84cd-65f2b689fbce';
-var scope = 'https://graph.microsoft.com/user.read';
-var url_auth = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize' +
-  '?response_type=token' +
-  '&client_id=' + client_id +
-  '&redirect_uri=' + encodeURIComponent(location.protocol + "//" + location.host + location.pathname) +
-  '&scope=' + encodeURIComponent(scope);
-
-$(document).ready(function () {
-  if (location.href = "https://mikiyks.github.io/inkan/") {
-    location.href = url_auth;
-  } else {
-    //API呼び出し
-    $(function () {
-      //alert(access_token); //確認用
-      $.ajax({
-        url: 'https://graph.microsoft.com/v1.0/me',
-        type: 'GET',
-        beforeSend: function (xhr) {
-          xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
-        },
-        success: function (data) {
-          //console.log(data); //確認用
-          alert(data.displayName);
-        },
-        error: function (data) {
-          console.log(data);
-        }
-      });
-    });
-  }
-});
-
-$(function () {
-  //access_tokenの取得
-  if (location.hash) {
-    var hashary = location.hash.substr(1).split('&');
-    $.each(hashary, function (i, v) {
-      var ary = v.split('=');
-      if (ary[0] == 'access_token') {
-        access_token = ary[1];
-        $('#exec').prop('disabled', false);
-        return false;
+     var authenticator;
+      var client_id = "2e1be2b2-01f2-466e-84cd-65f2b689fbce";
+      var redirect_url = "https://mikiyks.github.io/inkan/";
+      var scope = "https://graph.microsoft.com/user.read";
+      var access_token;
+       
+      Office.initialize = function(reason){
+        if(OfficeHelpers.Authenticator.isAuthDialog()) return;
       }
-    });
-  }
-});
+       
+      $(function(){
+        authenticator = new OfficeHelpers.Authenticator();
+         
+        //access_token取得
+        $("#login").click(function(){
+          authenticator.endpoints.registerMicrosoftAuth(client_id, {
+            redirectUrl: redirect_url,
+            scope: scope
+          });
+          authenticator.authenticate(OfficeHelpers.DefaultEndpoints.Microsoft)
+            .then(function(token){
+              access_token = token.access_token;
+              $("#exec").prop("disabled", false);
+            })
+            .catch(OfficeHelpers.Utilities.log);
+        });
+         
+        //API呼び出し
+        $("#exec").click(function(){
+          $.ajax({
+            url: "https://graph.microsoft.com/v1.0/me",
+            type: "GET",
+            beforeSend: function(xhr){
+              xhr.setRequestHeader("Authorization", "Bearer " + access_token);
+            },
+            success: function(data){
+
+            alert(data.displayName);
+               
+            },
+            error: function(data){
+              console.log(data);
+            }
+          });
+        });
+         
+      });
 </script>
   </head>
   <body>
