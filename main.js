@@ -214,7 +214,7 @@ await context.sync();
          
         //API呼び出し
         $('#exec').click(function(){
-          //alert(access_token); //確認用
+          alert(access_token); //確認用
           $.ajax({
             url: 'https://graph.microsoft.com/v1.0/me',
             type: 'GET',
