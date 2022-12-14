@@ -14,8 +14,10 @@
                      '&client_id=' + client_id +
                      '&redirect_uri=' + encodeURIComponent(location.protocol + "//" + location.host + location.pathname) +
                      '&scope=' + encodeURIComponent(scope);
-       
-      $(function(){
+
+
+        $(document).ready(function(){
+
         //access_tokenの取得
         if(location.hash){
           var hashary = location.hash.substr(1).split('&');
@@ -27,15 +29,8 @@
               return false;
             }
           });
-        }
-         
-        $('#login').click(function(){
-          location.href = url_auth;
-        });
-         
-        //API呼び出し
-        $('#exec').click(function(){
-          //alert(access_token); //確認用
+                  //API呼び出し
+        function(){
           $.ajax({
             url: 'https://graph.microsoft.com/v1.0/me',
             type: 'GET',
@@ -43,15 +38,16 @@
               xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
             },
             success: function(data){
-              //console.log(data); //確認用
               alert(data.surname);
             },
             error: function(data){
-              console.log(data);
+              //console.log(data);
             }
           });
         });
-      });
+      };
+        });
+         
     </script>
   </head>
   <body>
