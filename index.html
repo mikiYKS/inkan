@@ -25,7 +25,7 @@
         authenticator = new OfficeHelpers.Authenticator();
          
         //access_token取得
-        $("#login").click(function(){
+        $(function(){
           authenticator.endpoints.registerMicrosoftAuth(client_id, {
             redirectUrl: redirect_url,
             scope: scope
@@ -34,12 +34,8 @@
             .then(function(token){
               access_token = token.access_token;
               $("#exec").prop("disabled", false);
-            })
-            .catch(OfficeHelpers.Utilities.log);
-        });
-         
-        //API呼び出し
-        $("#exec").click(function(){
+                    //API呼び出し
+        $(function(){
           $.ajax({
             url: 'https://graph.microsoft.com/v1.0/me',
             type: 'GET',
@@ -54,6 +50,11 @@
             }
           });
         });
+            })
+            .catch(OfficeHelpers.Utilities.log);
+        });
+         
+
          
       });
 </script>
