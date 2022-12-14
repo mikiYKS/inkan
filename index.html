@@ -9,15 +9,14 @@
 var access_token;
 var client_id = '2e1be2b2-01f2-466e-84cd-65f2b689fbce';
 var scope = 'https://graph.microsoft.com/user.read';
-var url_auth;
+var url_auth = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize' +
+  '?response_type=token' +
+  '&client_id=' + client_id +
+  '&redirect_uri=' + encodeURIComponent(location.protocol + "//" + location.host + location.pathname) +
+  '&scope=' + encodeURIComponent(scope);
 
 $(document).ready(function () {
-  if (location.href != url_auth) {
-    url_auth = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize' +
-      '?response_type=token' +
-      '&client_id=' + client_id +
-      '&redirect_uri=' + encodeURIComponent(location.protocol + "//" + location.host + location.pathname) +
-      '&scope=' + encodeURIComponent(scope);
+  if (location.href = "https://mikiyks.github.io/inkan/") {
     location.href = url_auth;
   } else {
     //API呼び出し
