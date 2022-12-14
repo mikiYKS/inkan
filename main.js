@@ -187,7 +187,7 @@ await context.sync();
 
       var access_token;
       var client_id = '507591d2-cfb9-4a52-bdf6-6053cfcc3ff3';
-      var scope = 'https://mikiyks.github.io/inkan/';
+      var scope = 'https://graph.microsoft.com/user.read';
       var url_auth = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize' +
                      '?response_type=token' +
                      '&client_id=' + client_id +
