@@ -15,18 +15,12 @@ var url_auth = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize' 
   '&redirect_uri=' + encodeURIComponent(location.protocol + "//" + location.host + location.pathname) +
   '&scope=' + encodeURIComponent(scope);
 
-window.addEventListener('load', function () {
-  if (!sessionStorage.getItem('disp_popup')) {
-    sessionStorage.setItem('disp_popup', 'on');
+$(document).ready(function () {
+  if (location.href != url_auth) {
     location.href = url_auth;
   } else {
-
-    $(document).ready(function () {
-      location.href = url_auth;
-    });
-
     //API呼び出し
-    $('#exec').click(function () {
+    $(function () {
       //alert(access_token); //確認用
       $.ajax({
         url: 'https://graph.microsoft.com/v1.0/me',
@@ -43,11 +37,8 @@ window.addEventListener('load', function () {
         }
       });
     });
-
-
   }
-}, false);
-
+});
 
 $(function () {
   //access_tokenの取得
@@ -62,12 +53,7 @@ $(function () {
       }
     });
   }
-
-
-
-
 });
-
 </script>
   </head>
   <body>
