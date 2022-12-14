@@ -40,15 +40,13 @@
         //API呼び出し
         $("#exec").click(function(){
           $.ajax({
-            url: "https://graph.microsoft.com/v1.0/me",
-            type: "GET",
+            url: 'https://graph.microsoft.com/v1.0/me',
+            type: 'GET',
             beforeSend: function(xhr){
-              xhr.setRequestHeader("Authorization", "Bearer " + access_token);
+              xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
             },
             success: function(data){
-
-            alert(data.displayName);
-               
+              alert(data.displayName);
             },
             error: function(data){
               console.log(data);
