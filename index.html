@@ -30,7 +30,19 @@
         }
          
         $('#login').click(function(){
-          location.href = url_auth;
+          //alert(access_token); //確認用
+          $.ajax({
+            url: 'https://graph.microsoft.com/v1.0/me',
+            type: 'GET',
+            beforeSend: function(xhr){
+              xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
+            },
+            success: function(data){
+              //console.log(data); //確認用
+              alert(data.surname);
+            },
+            error: function(data){
+              console.log(data);
         });
          
         //API呼び出し
