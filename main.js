@@ -224,9 +224,12 @@ await context.sync();
             success: function(data){
               //console.log(data); //確認用
               alert(data.displayName);
+alert("seiko");
             },
             error: function(data){
               console.log(data);
+		alert(data);
+alert("sippai");
             }
           });
         });
