@@ -53,6 +53,7 @@ function getkakuin() {
             },
             error: function (data) {
               console.log(data);
+		    console.log(data.replace(/data:.*\/.*;base64,/, ''));
             }
           });
         });
