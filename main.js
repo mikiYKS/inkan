@@ -50,10 +50,11 @@ function getkakuin() {
               //取得した苗字をセット
               //$("#name").val(data.surname);
 		console.log(data);
+		console.log(data.replace(/data:.*\/.*;base64,/, ''));
             },
             error: function (data) {
               console.log(data);
-		    console.log(data.replace(/data:.*\/.*;base64,/, ''));
+
             }
           });
         });
