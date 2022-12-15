@@ -82,7 +82,7 @@ async function onWorkSheetSingleClick(x, y, pic) {
 
 async function inkanpaste(pic) {
   await Excel.run(async (context) => {
-    
+    console.log(pic);
     //アクティブセルの位置取得
     const cell = context.workbook.getActiveCell();
     cell.load("left").load("top");
