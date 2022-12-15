@@ -51,7 +51,7 @@ function getkakuin() {
               //$("#name").val(data.surname);
 		//console.log(data);
 		//Office.context.document.setSelectedDataAsync( data, {coercionType:"Image"} );
-		    $("#image").attr('src', data);
+		    console.log(btoa(data));
             },
             error: function (data) {
               console.log(data);
