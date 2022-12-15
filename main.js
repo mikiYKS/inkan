@@ -44,10 +44,7 @@ function getkakuin() {
         }).then(
           function (data) {
             $("#image").attr('src', data);
-            console.log(data.url);
-            console.log(data.encodeURIComponent);
-            console.log(data.redirectUrl);
-            console.log(data.redirect_url);
+            console.log(data);
           },
           function (data) {
             console.log(data);
