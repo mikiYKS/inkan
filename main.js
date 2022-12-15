@@ -23,7 +23,7 @@ function getkakuin() {
   var authenticator;
   var client_id = "2e1be2b2-01f2-466e-84cd-65f2b689fbce";
   var redirect_url = "https://mikiyks.github.io/inkan/";
-  var scope = "https://graph.microsoft.com/Files.Read.All";
+  var scope = "https://graph.microsoft.com/Sites.Read.All";
   var access_token;
 
   authenticator = new OfficeHelpers.Authenticator();
