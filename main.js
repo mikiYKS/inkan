@@ -1,4 +1,6 @@
 $(document).ready( function(){
+console.log(userSurName);
+console.log(userGivenName);
 var dt = new Date();
 var txtDate = dt.getFullYear().toString() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
 $('#date').val(txtDate);
@@ -184,53 +186,3 @@ shpStampImage.top = y;
 await context.sync();
 });
 }
-
-      var access_token;
-      var client_id = '507591d2-cfb9-4a52-bdf6-6053cfcc3ff3';
-      var scope = 'https://graph.microsoft.com/user.read';
-      var url_auth = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize' +
-                     '?response_type=token' +
-                     '&client_id=' + client_id +
-                     '&redirect_uri=' + encodeURIComponent(location.protocol + "//" + location.host + location.pathname) +
-                     '&scope=' + encodeURIComponent(scope);
-       
-      $(function(){
-        //access_tokenの取得
-        if(location.hash){
-          var hashary = location.hash.substr(1).split('&');
-          $.each(hashary,function(i, v){
-            var ary = v.split('=');
-            if(ary[0] == 'access_token'){
-              access_token = ary[1];
-              $('#exec').prop('disabled', false);
-              return false;
-            }
-          });
-        }
-         
-        $('#login').click(function(){
-          location.href = url_auth;
-        });
-         
-        //API呼び出し
-        $('#exec').click(function(){
-          alert(access_token); //確認用
-          $.ajax({
-            url: 'https://graph.microsoft.com/v1.0/me',
-            type: 'GET',
-            beforeSend: function(xhr){
-              xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
-            },
-            success: function(data){
-              //console.log(data); //確認用
-              alert(data.displayName);
-alert("seiko");
-            },
-            error: function(data){
-              console.log(data);
-		alert(data);
-alert("sippai");
-            }
-          });
-        });
-      });
