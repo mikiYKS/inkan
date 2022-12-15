@@ -1,14 +1,8 @@
 $(document).ready(function () {
 
-  $("#run").click(() => tryCatch(run));
+  $("#run").click(() => tryCatch(logtoSPList));
   
 });
-
-async function run() {
-  await Excel.run(async (context) => {
-logtoSPList();
-  });
-}
 
 async function tryCatch(callback) {
   try {
