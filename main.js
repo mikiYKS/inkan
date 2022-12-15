@@ -1,6 +1,7 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
   getUser();
+  getfilename();
 
   var dt = new Date();
   var txtDate = dt.getFullYear().toString() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
@@ -19,6 +20,7 @@ $(document).ready(function() {
 
 async function run() {
   await Excel.run(async (context) => {
+
     //名前が空なら処理なし
     if (
       !$("#name")
@@ -32,6 +34,7 @@ async function run() {
       await context.sync();
       //印鑑生成実行
       onWorkSheetSingleClick(cell.left, cell.top);
+      logtoSPList();
     }
   });
 }
@@ -188,7 +191,7 @@ async function onWorkSheetSingleClick(x, y) {
   });
 }
 
-Office.initialize = function(reason) {
+Office.initialize = function (reason) {
   if (OfficeHelpers.Authenticator.isAuthDialog()) return;
 };
 
@@ -209,26 +212,83 @@ async function getUser() {
 
   authenticator
     .authenticate(OfficeHelpers.DefaultEndpoints.Microsoft)
-    .then(function(token) {
+    .then(function (token) {
       access_token = token.access_token;
-      $("#exec").prop("disabled", false);
       //API呼び出し
-      $(function() {
+      $(function () {
         $.ajax({
           url: "https://graph.microsoft.com/v1.0/me",
           type: "GET",
-          beforeSend: function(xhr) {
+          beforeSend: function (xhr) {
             xhr.setRequestHeader("Authorization", "Bearer " + access_token);
           },
-          success: function(data) {
+          success: function (data) {
             //取得した苗字をセット
             $("#name").val(data.surname);
           },
-          error: function(data) {
+          error: function (data) {
             console.log(data);
           }
         });
       });
     })
     .catch(OfficeHelpers.Utilities.log);
+}
+
+async function logtoSPList() {
+  var authenticator;
+  var client_id = "2e1be2b2-01f2-466e-84cd-65f2b689fbce";
+  var redirect_url = "https://mikiyks.github.io/inkan/";
+  var scope = "https://graph.microsoft.com/sites.readwrite.all";
+  var access_token;
+
+  authenticator = new OfficeHelpers.Authenticator();
+
+  //access_token取得
+  authenticator.endpoints.registerMicrosoftAuth(client_id, {
+    redirectUrl: redirect_url,
+    scope: scope
+  });
+
+  authenticator
+    .authenticate(OfficeHelpers.DefaultEndpoints.Microsoft)
+    .then(function (token) {
+      access_token = token.access_token;
+      //API呼び出し
+      $(function () {
+        $.ajax({
+          url: "https://graph.microsoft.com/v1.0/sites/everyone/lists/6aac0560-622e-4ee1-ba8f-73b32d8e9f05/items",
+          type: "POST",
+          beforeSend: function (xhr) {
+            xhr.setRequestHeader("Authorization", "Bearer " + access_token);
+          },
+          data: {
+            'Title': $("#name").val(),
+            'FileName': $("#filename").val()
+          },
+          success: function (data) {
+            console.log("logOK");
+          },
+          error: function (data) {
+            console.log(data);
+          }
+        });
+      });
+    })
+    .catch(OfficeHelpers.Utilities.log);
+}
+
+function getfilename() {
+  Office.context.document.getFilePropertiesAsync(function (asyncResult) {
+    let filename = asyncResult.value.url
+      .split("/")
+      .reverse()[0]
+      .split(".")[0];
+    let extend = asyncResult.value.url
+      .split("/")
+      .reverse()[0]
+      .split(".")[1];
+    //console.log(filename + "." + extend);
+    $("#filename").val(filename + "." + extend)
+  });
 }
