@@ -45,21 +45,13 @@ function getkakuin() {
           },
           success: function(data, status) {
 
-            console.log(data);
-            
-            var text_decoder = new TextDecoder("utf-8");
-            var data2 = text_decoder.decode(Uint8Array.from(data).buffer);
-            console.log(data2);
-            
-            //var b64 = "data:image/png;base64," + btoa(String.fromCharCode.apply(String, data2));
-            //console.log(b64);
             
             // String(UTF-16) -> String(UTF-8) -> BASE64(UTF-8)
             var base64 = btoa(unescape(encodeURIComponent(data)));
             console.log(base64);
-            // BASE64(UTF-8) -> String(UTF-8) -> String(UTF-16)
-            var utf16 = decodeURIComponent(escape(atob(base64)));
-            console.log(utf16);
+            var kakuinimage = "data:image/png; base64, " + base64;
+            $("#image").attr('src', kakuinimage);
+
           },
           error: function(data) {
             console.log(data);
