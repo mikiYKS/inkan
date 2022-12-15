@@ -54,7 +54,8 @@ async function getImageBase64(url) {
   const contentType = response.headers.get("content-type");
   const arrayBuffer = await response.arrayBuffer();
   let base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(arrayBuffer)));
-  return `data:${contentType};base64,${base64String}`;
+  //return `data:${contentType};base64,${base64String}`;
+  return base64String;
 }
 
 async function tryCatch(callback) {
@@ -71,7 +72,7 @@ Office.initialize = function (reason) {
 
 async function onWorkSheetSingleClick(x, y, pic) {
   await Excel.run(async (context) => {
-    console.log(pic);
+
     const shapes = context.workbook.worksheets.getActiveWorksheet().shapes;
     const shpStampImage = shapes.addImage(pic);
     shpStampImage.name = "印鑑";
