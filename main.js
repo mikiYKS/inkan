@@ -45,7 +45,7 @@ function getkakuin() {
           },
           success: function(data, status) {
 
-            console.log(data)
+            console.log(data);
             
             var text_decoder = new TextDecoder("utf-8");
             var data2 = text_decoder.decode(Uint8Array.from(data).buffer);
@@ -53,6 +53,12 @@ function getkakuin() {
             
             var b64 = "data:image/png;base64," + btoa(String.fromCharCode.apply(String, data2));
             console.log(b64);
+            
+            // String(UTF-16) -> String(UTF-8) -> BASE64(UTF-8)
+            var base64 = btoa(unescape(encodeURIComponent(data)));
+
+            // BASE64(UTF-8) -> String(UTF-8) -> String(UTF-16)
+            var utf16 = decodeURIComponent(escape(atob(base64)));
 
           },
           error: function(data) {
