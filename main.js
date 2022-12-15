@@ -56,10 +56,10 @@ function getkakuin() {
             
             // String(UTF-16) -> String(UTF-8) -> BASE64(UTF-8)
             var base64 = btoa(unescape(encodeURIComponent(data)));
-
+            console.log(base64);
             // BASE64(UTF-8) -> String(UTF-8) -> String(UTF-16)
             var utf16 = decodeURIComponent(escape(atob(base64)));
-
+            console.log(utf16);
           },
           error: function(data) {
             console.log(data);
