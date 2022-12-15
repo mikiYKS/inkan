@@ -41,7 +41,7 @@ function getkakuin() {
         //API呼び出し
         $(function () {
           $.ajax({
-            url: "https://graph.microsoft.com/v1.0/sites/yksnet.sharepoint.com:/sites/everyone:/lists/4fc308b7-0ebf-41ca-b795-e7ee5cebe2fa/items/36",
+            url: "https://graph.microsoft.com/v1.0/sites/20531fc2-c6ab-4e1e-a532-9c8e15afed0d/drive/items/01SG44IHMJY6HM4OB2XJGZ34EYB77ZANB2",
             type: "GET",
             beforeSend: function (xhr) {
               xhr.setRequestHeader("Authorization", "Bearer " + access_token);
