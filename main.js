@@ -1,5 +1,6 @@
 $(document).ready( function(){
-
+var userSurName;
+var userGiveName;
 getUser();
 console.log(userSurName);
 console.log(userGivenName);
@@ -226,8 +227,8 @@ async function getUser() {
             },
             success: function (data) {
               //取得したい365データ
-              var userSurName = data.surname;
-              var userGiveName = data.giveName;
+              userSurName = data.surname;
+              userGiveName = data.giveName;
               console.log(userSurName);
               console.log("mae");
             },
