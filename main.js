@@ -33,10 +33,9 @@ function getKakuin() {
         }).then(
           async function (data) {
             const obj = data["@microsoft.graph.downloadUrl"];
-            var kakuinbase64 = await getImageBase64(obj);
 
             //ここからkakuinbase64を張り付ける処理
-            inkanpaste(kakuinbase64);
+            inkanpaste(obj);
 
           },
           function (data) {
@@ -46,15 +45,6 @@ function getKakuin() {
       });
     })
     .catch(OfficeHelpers.Utilities.log);
-}
-
-// バイナリ画像をbase64で返す
-async function getImageBase64(url) {
-  const response = await fetch(url);
-  const contentType = response.headers.get("content-type");
-  const arrayBuffer = await response.arrayBuffer();
-  let base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(arrayBuffer)));
-  return `data:${contentType};base64,${base64String}`;
 }
 
 async function tryCatch(callback) {
@@ -82,7 +72,6 @@ async function onWorkSheetSingleClick(x, y, pic) {
 
 async function inkanpaste(pic) {
   await Excel.run(async (context) => {
-    console.log(pic);
     //アクティブセルの位置取得
     const cell = context.workbook.getActiveCell();
     cell.load("left").load("top");
