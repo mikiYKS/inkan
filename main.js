@@ -1,5 +1,10 @@
-$(document).ready(function() {
+$(document).ready(function () {
+
+
   $("#run").click(() => tryCatch(getkakuin));
+
+
+
 });
 
 async function tryCatch(callback) {
@@ -10,7 +15,7 @@ async function tryCatch(callback) {
   }
 }
 
-Office.initialize = function(reason) {
+Office.initialize = function (reason) {
   if (OfficeHelpers.Authenticator.isAuthDialog()) return;
 };
 
@@ -29,30 +34,29 @@ function getkakuin() {
     scope: scope
   });
 
-  authenticator
-    .authenticate(OfficeHelpers.DefaultEndpoints.Microsoft)
-    .then(function(token) {
-      access_token = token.access_token;
-      //API呼び出し
-      $(function() {
-        $.ajax({
-          url: "https://graph.microsoft.com/v1.0/sites/everyone/SiteAssets/kakuin.png",
-          type: "GET",
-          beforeSend: function(xhr) {
-            xhr.setRequestHeader("Authorization", "Bearer " + access_token);
-          },
-          success: function(data) {
-            //取得した苗字をセット
-            //$("#name").val(data.surname);
-            console.log(data.id);
-            
-          },
-          error: function(data) {
-            console.log(data);
-          }
+    authenticator
+      .authenticate(OfficeHelpers.DefaultEndpoints.Microsoft)
+      .then(function (token) {
+        access_token = token.access_token;
+        //API呼び出し
+        $(function () {
+          $.ajax({
+            url: "https://graph.microsoft.com/v1.0/sites/yksnet.sharepoint.com:/sites/everyone:/lists/4fc308b7-0ebf-41ca-b795-e7ee5cebe2fa/items/36",
+            type: "GET",
+            beforeSend: function (xhr) {
+              xhr.setRequestHeader("Authorization", "Bearer " + access_token);
+            },
+            success: function (data) {
+              //取得した苗字をセット
+              //$("#name").val(data.surname);
+		
+            },
+            error: function (data) {
+              console.log(data);
+            }
+          });
         });
-      });
-      return { access_token: access_token };
-    })
-    .catch(OfficeHelpers.Utilities.log);
+        return { access_token: access_token };
+      })
+      .catch(OfficeHelpers.Utilities.log);
 }
