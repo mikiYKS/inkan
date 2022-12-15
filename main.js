@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
   getUser();
+  getfilename();
 
   var dt = new Date();
   var txtDate = dt.getFullYear().toString() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
@@ -19,7 +20,7 @@ $(document).ready(function () {
 
 async function run() {
   await Excel.run(async (context) => {
-    getfilename();
+
     //名前が空なら処理なし
     if (
       !$("#name")
@@ -194,7 +195,7 @@ Office.initialize = function (reason) {
   if (OfficeHelpers.Authenticator.isAuthDialog()) return;
 };
 
-async function getUser() {
+function getUser() {
   var authenticator;
   var client_id = "2e1be2b2-01f2-466e-84cd-65f2b689fbce";
   var redirect_url = "https://mikiyks.github.io/inkan/";
@@ -232,14 +233,16 @@ async function getUser() {
       });
     })
     .catch(OfficeHelpers.Utilities.log);
+  return access_token;
 }
 
-async function logtoSPList() {
+function logtoSPList() {
+
   var authenticator;
   var client_id = "2e1be2b2-01f2-466e-84cd-65f2b689fbce";
   var redirect_url = "https://mikiyks.github.io/inkan/";
   var scope = "https://graph.microsoft.com/sites.readwrite.all";
-  var access_token;
+  var access_token = getUser().access_token;
 
   authenticator = new OfficeHelpers.Authenticator();
 
@@ -252,7 +255,7 @@ async function logtoSPList() {
   authenticator
     .authenticate(OfficeHelpers.DefaultEndpoints.Microsoft)
     .then(function (token) {
-      access_token = token.access_token;
+
       //API呼び出し
       $(function () {
         $.ajax({
@@ -277,7 +280,7 @@ async function logtoSPList() {
     .catch(OfficeHelpers.Utilities.log);
 }
 
-async function getfilename() {
+function getfilename() {
   Office.context.document.getFilePropertiesAsync(function (asyncResult) {
     let filename = asyncResult.value.url
       .split("/")
@@ -288,6 +291,6 @@ async function getfilename() {
       .reverse()[0]
       .split(".")[1];
     //console.log(filename + "." + extend);
-    $("#filename").val(filename + "." + extend)
+    $("#filename").val(filename + "." + extend);
   });
 }
