@@ -71,7 +71,7 @@ Office.initialize = function (reason) {
 
 async function onWorkSheetSingleClick(x, y, pic) {
   await Excel.run(async (context) => {
-    
+    console.log(pic);
     const shapes = context.workbook.worksheets.getActiveWorksheet().shapes;
     const shpStampImage = shapes.addImage(pic);
     shpStampImage.name = "印鑑";
