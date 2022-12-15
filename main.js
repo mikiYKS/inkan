@@ -43,8 +43,8 @@ function getkakuin() {
           }
         }).then(
           function (data) {
-            //const obj = JSON.parse(data);
-            //console.log(obj.createdDateTime);
+            const obj = data.createdDateTime;
+            console.log(obj);
             //$("#image").attr('src', data);
             console.log(data);
           },
