@@ -1,10 +1,5 @@
-$(document).ready(function () {
-
-
+$(document).ready(function() {
   $("#run").click(() => tryCatch(getkakuin));
-
-
-
 });
 
 async function tryCatch(callback) {
@@ -15,7 +10,7 @@ async function tryCatch(callback) {
   }
 }
 
-Office.initialize = function (reason) {
+Office.initialize = function(reason) {
   if (OfficeHelpers.Authenticator.isAuthDialog()) return;
 };
 
@@ -36,25 +31,24 @@ function getkakuin() {
 
   authenticator
     .authenticate(OfficeHelpers.DefaultEndpoints.Microsoft)
-    .then(function (token) {
+    .then(function(token) {
       access_token = token.access_token;
       //API呼び出し
-      $(function () {
+      $(function() {
         $.ajax({
-          url: "https://graph.microsoft.com/v1.0/sites/20531fc2-c6ab-4e1e-a532-9c8e15afed0d/drive/items/01SG44IHMJY6HM4OB2XJGZ34EYB77ZANB2/content",
+          url:
+            "https://graph.microsoft.com/v1.0/sites/20531fc2-c6ab-4e1e-a532-9c8e15afed0d/drive/items/01SG44IHMJY6HM4OB2XJGZ34EYB77ZANB2/content",
           type: "GET",
-          beforeSend: function (xhr) {
+          beforeSend: function(xhr) {
             xhr.setRequestHeader("Authorization", "Bearer " + access_token);
           },
-          success: async function (response) {
-            const data = response.json;
-
-            console.log(data)
-
+          success: function(response) {
+            console.log(response.responseText);
+            console.log(response.responseXML);
+            console.log(response.response)
           },
-          error: function (data) {
+          error: function(data) {
             console.log(data);
-
           }
         });
       });
