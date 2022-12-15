@@ -1,7 +1,9 @@
 $(document).ready( function(){
+
 getUser();
 console.log(userSurName);
 console.log(userGivenName);
+
 var dt = new Date();
 var txtDate = dt.getFullYear().toString() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
 $('#date').val(txtDate);
@@ -188,11 +190,12 @@ await context.sync();
 });
 }
 
+
 Office.initialize = function (reason) {
   if (OfficeHelpers.Authenticator.isAuthDialog()) return;
 }
 
-function getUser() {
+async function getUser() {
 
   var authenticator;
   var client_id = "2e1be2b2-01f2-466e-84cd-65f2b689fbce";
@@ -227,7 +230,6 @@ function getUser() {
               var userGiveName = data.giveName;
               console.log(userSurName);
               console.log("mae");
-              return userSurName;
             },
             error: function (data) {
               console.log(data);
@@ -237,4 +239,5 @@ function getUser() {
       })
       .catch(OfficeHelpers.Utilities.log);
   });
+  return userSurName;
 };
