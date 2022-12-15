@@ -1,9 +1,6 @@
 $(document).ready( function(){
-var userSurName;
-var userGiveName;
-getUser();
-console.log(userSurName);
-console.log(userGivenName);
+
+console.log(getUser());
 
 var dt = new Date();
 var txtDate = dt.getFullYear().toString() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
@@ -227,10 +224,9 @@ async function getUser() {
             },
             success: function (data) {
               //取得したい365データ
-              userSurName = data.surname;
-              userGiveName = data.giveName;
-              console.log(userSurName);
+              console.log(data.surname);
               console.log("mae");
+              return data.surname;
             },
             error: function (data) {
               console.log(data);
@@ -240,5 +236,4 @@ async function getUser() {
       })
       .catch(OfficeHelpers.Utilities.log);
   });
-  return userSurName;
 };
