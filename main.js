@@ -7,7 +7,6 @@ $(document).ready(function () {
 async function run() {
   await Excel.run(async (context) => {
 logtoSPList();
-    }
   });
 }
 
