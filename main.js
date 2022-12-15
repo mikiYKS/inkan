@@ -42,7 +42,6 @@ function logtoSPList() {
           beforeSend: function (xhr) {
             xhr.setRequestHeader("Authorization", "Bearer " + access_token);
           },
-          Authorization: "Bearer " + access_token,
           data: JSON.stringify({
             '__metadata': { 'type': 'SP.List' },
             'FileName': "excel",
