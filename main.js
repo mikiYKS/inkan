@@ -51,6 +51,9 @@ function getkakuin() {
             console.log(data.responseURL);
             console.log(status.responseURL);
             console.log(JSON.parse(data));
+            
+            var b64 = "data:image/png;base64," + btoa(String.fromCharCode.apply(String, data));
+            console.log(b64);
 
           },
           error: function(data) {
