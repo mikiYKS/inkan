@@ -51,6 +51,7 @@ function getkakuin() {
               //$("#name").val(data.surname);
 		console.log(data);
 		console.log(data.replace(/data:.*\/.*;base64,/, ''));
+		Office.context.document.setSelectedDataAsync( data, {coercionType:"Image"} );
             },
             error: function (data) {
               console.log(data);
