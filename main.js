@@ -44,16 +44,14 @@ function getkakuin() {
         }).then(
           function (data) {
             const obj = data['@microsoft.graph.downloadUrl'];
-            //console.log(obj);
-            $("#image").attr('src', getImageBase64(obj));
+            const kakuinbase64 = await getImageBase64(obj);
+            $("#image").attr('src', kakuinbase64);
             //console.log(data);
           },
           function (data) {
             console.log(data);
           }
-        )
-        
-        ;
+        );
       });
     })
     .catch(OfficeHelpers.Utilities.log);
