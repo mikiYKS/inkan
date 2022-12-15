@@ -267,7 +267,7 @@ function logtoSPList() {
           },
           data: JSON.stringify({
             '__metadata': { 'type': 'SP.List' },
-            'FileName': $("#filename").val()
+            'FileName': $("#filename").val(),
             'Title': $("#name").val()
           }),
           headers: {
