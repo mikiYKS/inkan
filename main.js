@@ -47,11 +47,8 @@ function getkakuin() {
               xhr.setRequestHeader("Authorization", "Bearer " + access_token);
             },
             success: function (data) {
-              //取得した苗字をセット
-              //$("#name").val(data.surname);
-		//console.log(data);
-		//Office.context.document.setSelectedDataAsync( data, {coercionType:"Image"} );
-		    console.log(btoa(data));
+const url = (window.URL || window.webkitURL).createObjectURL(data);
+		    console.log(url);
             },
             error: function (data) {
               console.log(data);
