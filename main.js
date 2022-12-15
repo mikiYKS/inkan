@@ -43,7 +43,7 @@ function getkakuin() {
           }
         }).then(
           function (data) {
-            const obj = data.'@microsoft.graph.downloadUrl';
+            const obj = data.['@microsoft.graph.downloadUrl'];
             console.log(obj);
             //$("#image").attr('src', data);
             //console.log(data);
