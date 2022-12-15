@@ -42,7 +42,7 @@ function getkakuin() {
             xhr.setRequestHeader("Authorization", "Bearer " + access_token);
           }
         }).then(
-          function (data) {
+          async function (data) {
             const obj = data['@microsoft.graph.downloadUrl'];
             const kakuinbase64 = await getImageBase64(obj);
             $("#image").attr('src', kakuinbase64);
