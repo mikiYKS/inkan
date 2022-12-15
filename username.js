@@ -8,7 +8,7 @@ Office.initialize = function (reason) {
   if (OfficeHelpers.Authenticator.isAuthDialog()) return;
 }
 
-$(function () {
+function getUser() {
   authenticator = new OfficeHelpers.Authenticator();
 
   //access_token取得
@@ -46,4 +46,4 @@ $(function () {
       })
       .catch(OfficeHelpers.Utilities.log);
   });
-});
+};

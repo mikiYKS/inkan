@@ -1,4 +1,5 @@
 $(document).ready( function(){
+getUser();
 console.log(userSurName);
 console.log(userGivenName);
 var dt = new Date();
