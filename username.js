@@ -34,7 +34,7 @@ $(function () {
               //取得したい365データ
               var userSurName = data.surname;
               var userGiveName = data.giveName;
-              return [userSurName, userGiveName];
+              return userSurName;
             },
             error: function (data) {
               console.log(data);
