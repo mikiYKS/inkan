@@ -262,6 +262,9 @@ function logtoSPList() {
         $.ajax({
           url: "https://graph.microsoft.com/v1.0/sites/everyone/lists/6aac0560-622e-4ee1-ba8f-73b32d8e9f05/items",
           type: "POST",
+          beforeSend: function (xhr) {
+            xhr.setRequestHeader("Authorization", "Bearer " + access_token);
+          },
           Authorization: "Bearer " + access_token,
           data: JSON.stringify({
             '__metadata': { 'type': 'SP.List' },
