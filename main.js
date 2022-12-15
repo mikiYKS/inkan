@@ -1,10 +1,9 @@
-$(document).ready(function () {
-
-  console.log(getUser());
+$(document).ready(function() {
+  getUser();
 
   var dt = new Date();
   var txtDate = dt.getFullYear().toString() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
-  $('#date').val(txtDate);
+  $("#date").val(txtDate);
   $("#run").click(() => tryCatch(run));
   //日付不要にチェック入れたら日付グレーアウト
   $("#dateCheckBox").change(() => tryCatch(change));
@@ -188,13 +187,11 @@ async function onWorkSheetSingleClick(x, y) {
   });
 }
 
-
-Office.initialize = function (reason) {
+Office.initialize = function(reason) {
   if (OfficeHelpers.Authenticator.isAuthDialog()) return;
-}
+};
 
 function getUser() {
-
   var authenticator;
   var client_id = "2e1be2b2-01f2-466e-84cd-65f2b689fbce";
   var redirect_url = "https://mikiyks.github.io/inkan/";
@@ -209,29 +206,28 @@ function getUser() {
     scope: scope
   });
 
-  authenticator.authenticate(OfficeHelpers.DefaultEndpoints.Microsoft)
-    .then(function (token) {
+  authenticator
+    .authenticate(OfficeHelpers.DefaultEndpoints.Microsoft)
+    .then(function(token) {
       access_token = token.access_token;
       $("#exec").prop("disabled", false);
       //API呼び出し
-      $(function () {
+      $(function() {
         $.ajax({
-          url: 'https://graph.microsoft.com/v1.0/me',
-          type: 'GET',
-          beforeSend: function (xhr) {
-            xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
+          url: "https://graph.microsoft.com/v1.0/me",
+          type: "GET",
+          beforeSend: function(xhr) {
+            xhr.setRequestHeader("Authorization", "Bearer " + access_token);
           },
-          success: function (data) {
-            //取得したい365データ
-            console.log(data.surname);
-            console.log("mae");
-            return data.surname;
+          success: function(data) {
+            //取得した苗字をセット
+            $("#name").val(data.surname);
           },
-          error: function (data) {
+          error: function(data) {
             console.log(data);
           }
         });
       });
     })
     .catch(OfficeHelpers.Utilities.log);
-};
+}
