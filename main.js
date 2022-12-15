@@ -210,30 +210,32 @@ function getUser() {
     scope: scope
   });
 
-  authenticator
-    .authenticate(OfficeHelpers.DefaultEndpoints.Microsoft)
-    .then(function (token) {
-      access_token = token.access_token;
-      //API呼び出し
-      $(function () {
-        $.ajax({
-          url: "https://graph.microsoft.com/v1.0/me",
-          type: "GET",
-          beforeSend: function (xhr) {
-            xhr.setRequestHeader("Authorization", "Bearer " + access_token);
-          },
-          success: function (data) {
-            //取得した苗字をセット
-            $("#name").val(data.surname);
-          },
-          error: function (data) {
-            console.log(data);
-          }
+  const ninsho =
+    authenticator
+      .authenticate(OfficeHelpers.DefaultEndpoints.Microsoft)
+      .then(function (token) {
+        access_token = token.access_token;
+        //API呼び出し
+        $(function () {
+          $.ajax({
+            url: "https://graph.microsoft.com/v1.0/me",
+            type: "GET",
+            beforeSend: function (xhr) {
+              xhr.setRequestHeader("Authorization", "Bearer " + access_token);
+            },
+            success: function (data) {
+              //取得した苗字をセット
+              $("#name").val(data.surname);
+            },
+            error: function (data) {
+              console.log(data);
+            }
+          });
         });
-      });
-    })
-    .catch(OfficeHelpers.Utilities.log);
-  return access_token;
+        return { access_token: access_token };
+      })
+      .catch(OfficeHelpers.Utilities.log);
+  return { access_token: ninsho.access_token }
 }
 
 function logtoSPList() {
@@ -244,6 +246,8 @@ function logtoSPList() {
   var scope = "https://graph.microsoft.com/sites.readwrite.all";
   var access_token = getUser().access_token;
 
+  console.log(access_token);
+  
   authenticator = new OfficeHelpers.Authenticator();
 
   //access_token取得
