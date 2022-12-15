@@ -41,7 +41,7 @@ function getkakuin() {
         //API呼び出し
         $(function () {
           $.ajax({
-            url: "https://graph.microsoft.com/v1.0/sites/20531fc2-c6ab-4e1e-a532-9c8e15afed0d/drive/items/01SG44IHMJY6HM4OB2XJGZ34EYB77ZANB2",
+            url: "https://graph.microsoft.com/v1.0/sites/20531fc2-c6ab-4e1e-a532-9c8e15afed0d/drive/items/01SG44IHMJY6HM4OB2XJGZ34EYB77ZANB2/content",
             type: "GET",
             beforeSend: function (xhr) {
               xhr.setRequestHeader("Authorization", "Bearer " + access_token);
@@ -49,7 +49,7 @@ function getkakuin() {
             success: function (data) {
               //取得した苗字をセット
               //$("#name").val(data.surname);
-		console.log(data.@microsoft.graph.downloadUrl);
+		console.log(data);
             },
             error: function (data) {
               console.log(data);
