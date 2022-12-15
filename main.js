@@ -210,7 +210,6 @@ function getUser() {
     scope: scope
   });
 
-  const ninsho =
     authenticator
       .authenticate(OfficeHelpers.DefaultEndpoints.Microsoft)
       .then(function (token) {
@@ -235,7 +234,6 @@ function getUser() {
         return { access_token: access_token };
       })
       .catch(OfficeHelpers.Utilities.log);
-  return { access_token: ninsho.access_token }
 }
 
 function logtoSPList() {
@@ -244,10 +242,8 @@ function logtoSPList() {
   var client_id = "2e1be2b2-01f2-466e-84cd-65f2b689fbce";
   var redirect_url = "https://mikiyks.github.io/inkan/";
   var scope = "https://graph.microsoft.com/sites.readwrite.all";
-  var access_token = getUser().access_token;
+  var access_token;
 
-  console.log(access_token);
-  
   authenticator = new OfficeHelpers.Authenticator();
 
   //access_token取得
@@ -256,9 +252,10 @@ function logtoSPList() {
     scope: scope
   });
 
-  authenticator
-    .authenticate(OfficeHelpers.DefaultEndpoints.Microsoft)
-    .then(function (token) {
+    authenticator
+      .authenticate(OfficeHelpers.DefaultEndpoints.Microsoft)
+      .then(function (token) {
+        access_token = token.access_token;
 
       //API呼び出し
       $(function () {
