@@ -46,8 +46,9 @@ function getkakuin() {
 
             console.log(data);
             console.log(status);
-            console.log(data.response);
+            console.log(data.responseText);
             console.log(data.responseURL);
+            console.log(status.responseURL);
 
           },
           error: function(data) {
