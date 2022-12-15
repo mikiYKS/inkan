@@ -42,13 +42,13 @@ function getkakuin() {
           beforeSend: function(xhr) {
             xhr.setRequestHeader("Authorization", "Bearer " + access_token);
           },
-          success: function(response) {
-            response.onload = function(data) {
-            console.log(data.responseText);
-            console.log(data.responseXML);
-            console.log(data.response);
-            console.log(data.responseURL);
-            };
+          success: function(data, status, xhr) {
+
+            console.log(data);
+            console.log(status);
+            console.log(xhr.response);
+            console.log(xhr.responseURL);
+
           },
           error: function(data) {
             console.log(data);
