@@ -42,7 +42,8 @@ function getkakuin() {
           beforeSend: function(xhr) {
             xhr.setRequestHeader("Authorization", "Bearer " + access_token);
           },
-          success: function(data, status) {
+          done: function(data, status) {
+            $("#image").attr('src', data);
             console.log(data.url);
             console.log(data.encodeURIComponent);
             console.log(data.redirectUrl);
@@ -54,7 +55,7 @@ function getkakuin() {
             //var kakuinimage = "data:image/png; base64, " + base64;
             //$("#image").attr('src', kakuinimage);
           },
-          error: function(data) {
+          fail: function(data) {
             console.log(data);
           }
         });
