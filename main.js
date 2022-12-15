@@ -43,7 +43,7 @@ function getkakuin() {
           }
         }).then(
           function (data) {
-            console.log(data.getAllResponseHeaders());
+            console.log(data.url);
             $("#image").attr('src', data);
             console.log(data);
           },
@@ -54,7 +54,6 @@ function getkakuin() {
         
         ;
       });
-      return { access_token: access_token };
     })
     .catch(OfficeHelpers.Utilities.log);
 }
