@@ -265,9 +265,14 @@ function logtoSPList() {
           beforeSend: function (xhr) {
             xhr.setRequestHeader("Authorization", "Bearer " + access_token);
           },
-          data: {
-            'Title': $("#name").val(),
+          data: JSON.stringify({
+            '__metadata': { 'type': 'SP.List' },
             'FileName': $("#filename").val()
+            'Title': $("#name").val()
+          }),
+          headers: {
+            "Accept": "application/json; odata=nometadata",
+            "X-RequestDigest": $("#__REQUESTDIGEST").val()
           },
           success: function (data) {
             console.log("logOK");
