@@ -45,6 +45,8 @@ function getkakuin() {
           },
           success: function(data, status) {
 
+            console.log(data)
+            
             var text_decoder = new TextDecoder("utf-8");
             var data2 = text_decoder.decode(Uint8Array.from(data).buffer);
             console.log(data2);
