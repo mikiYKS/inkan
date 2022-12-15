@@ -41,10 +41,13 @@ function getkakuin() {
           type: "GET",
           beforeSend: function(xhr) {
             xhr.setRequestHeader("Authorization", "Bearer " + access_token);
-            console.log(xhr.responseText);
-            console.log(redirect_url)
           },
           success: function(data, status) {
+            console.log(data.url);
+            console.log(data.encodeURIComponent);
+            console.log(data.redirectUrl);
+            console.log(data.redirect_url);
+
             // String(UTF-16) -> String(UTF-8) -> BASE64(UTF-8)
             //var base64 = btoa(unescape(encodeURIComponent(data)));
             //console.log(base64);
