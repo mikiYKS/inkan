@@ -51,7 +51,7 @@ function getkakuin() {
             var data2 = text_decoder.decode(Uint8Array.from(data).buffer);
             console.log(data2);
             
-            var b64 = "data:image/png;base64," + btoa(String.fromCharCode.apply(String, data2));
+            //var b64 = "data:image/png;base64," + btoa(String.fromCharCode.apply(String, data2));
             console.log(b64);
             
             // String(UTF-16) -> String(UTF-8) -> BASE64(UTF-8)
