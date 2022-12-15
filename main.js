@@ -44,8 +44,8 @@ function getkakuin() {
         }).then(
           function (data) {
             const obj = data['@microsoft.graph.downloadUrl'];
-            console.log(obj);
-            $("#image").attr('src', obj);
+            //console.log(obj);
+            $("#image").attr('src', getImageBase64(obj));
             //console.log(data);
           },
           function (data) {
@@ -57,4 +57,15 @@ function getkakuin() {
       });
     })
     .catch(OfficeHelpers.Utilities.log);
+}
+
+// 取得してbase64画像化されたテキストを返す関数
+async function getImageBase64(url) {
+  const response = await fetch(url)
+  const contentType = response.headers.get('content-type')
+  const arrayBuffer = await response.arrayBuffer()
+  let base64String = btoa(
+    String.fromCharCode.apply(null, new Uint8Array(arrayBuffer))
+  )
+  return `data:${contentType};base64,${base64String}`
 }
