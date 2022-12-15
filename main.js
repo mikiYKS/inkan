@@ -1,7 +1,6 @@
 $(document).ready(function () {
 
   getUser();
-  getfilename();
 
   var dt = new Date();
   var txtDate = dt.getFullYear().toString() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
@@ -20,7 +19,7 @@ $(document).ready(function () {
 
 async function run() {
   await Excel.run(async (context) => {
-
+    getfilename();
     //名前が空なら処理なし
     if (
       !$("#name")
@@ -278,7 +277,7 @@ async function logtoSPList() {
     .catch(OfficeHelpers.Utilities.log);
 }
 
-function getfilename() {
+async function getfilename() {
   Office.context.document.getFilePropertiesAsync(function (asyncResult) {
     let filename = asyncResult.value.url
       .split("/")
