@@ -32,6 +32,7 @@ function logtoSPList() {
       .authenticate(OfficeHelpers.DefaultEndpoints.Microsoft)
       .then(function (token) {
         access_token = token.access_token;
+	console.log(access_toen);
 
       //API呼び出し
       $(function () {
