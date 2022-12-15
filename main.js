@@ -40,11 +40,10 @@ function getkakuin() {
           type: "GET",
           beforeSend: function (xhr) {
             xhr.setRequestHeader("Authorization", "Bearer " + access_token);
-            
-          }
+          };
         }).then(
           function (data) {
-            console.log(data.getAllResponseHeaders())
+            console.log(data.getAllResponseHeaders());
             $("#image").attr('src', data);
             console.log(data);
           },
