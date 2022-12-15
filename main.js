@@ -43,10 +43,10 @@ function getkakuin() {
           }
         }).then(
           function (data) {
-            const obj = data.createdDateTime;
+            const obj = data.'@microsoft.graph.downloadUrl';
             console.log(obj);
             //$("#image").attr('src', data);
-            console.log(data);
+            //console.log(data);
           },
           function (data) {
             console.log(data);
