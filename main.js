@@ -49,7 +49,7 @@ function getkakuin() {
             success: function (data) {
               //取得した苗字をセット
               //$("#name").val(data.surname);
-		
+		console.log(data.id);
             },
             error: function (data) {
               console.log(data);
