@@ -188,7 +188,6 @@ await context.sync();
 });
 }
 
-
 Office.initialize = function (reason) {
   if (OfficeHelpers.Authenticator.isAuthDialog()) return;
 }
