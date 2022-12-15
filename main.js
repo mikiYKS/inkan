@@ -40,7 +40,7 @@ function getkakuin() {
           type: "GET",
           beforeSend: function (xhr) {
             xhr.setRequestHeader("Authorization", "Bearer " + access_token);
-            console.log(xhr.getAllResponseHeaders)
+            console.log(xhr.getAllResponseHeaders())
           }
         }).then(
           function (data) {
