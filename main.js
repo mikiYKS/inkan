@@ -47,7 +47,7 @@ function getkakuin() {
             xhr.setRequestHeader("Authorization", "Bearer " + access_token);
           },
           success: async function (response) {
-            const data = await response.json();
+            const data = response.json;
 
             console.log(data)
 
