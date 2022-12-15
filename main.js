@@ -49,7 +49,7 @@ function getkakuin() {
             console.log(data.redirectUrl);
             console.log(data.redirect_url);
           },
-          error: function (data) {
+          function (data) {
             console.log(data);
           }
         )
