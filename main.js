@@ -35,18 +35,18 @@ async function run() {
 
       //ログ出力
       $(function () {
-        Office.context.document.getFilePropertiesAsync(async function (asyncResult) {
+        Excel.run(async (context) => {
           var inkanName = $("#name").val();
-          var fileName;
-          if (asyncResult.value.url === undefined || asyncResult.value.url == "") {
-            fileName = '未保存';
+          context.workbook.load("name");
+          await context.sync();
+          if (context.workbook.name == "") {
+            var fileName = '未保存';
           } else {
-            fileName = fileUrl.match(".+/(.+?)([\?#;].*)?$")[1];
+            var fileName = context.workbook.name;
           };
           inkanLog(inkanName, fileName);
         });
       });
-
 
     }
   });
