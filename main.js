@@ -42,7 +42,7 @@ async function run() {
           const alligator = ["XLSX", "XLSM", "XLSB", "XLS", "XLTX", "XLTM", "XLT"];
           const ext = context.workbook.name.split('.').pop().toUpperCase();
           if (alligator.indexOf(ext) == -1) {
-            var fileName = '未保存';
+            var fileName = '未保存エクセル';
           } else {
             var fileName = context.workbook.name;
           };
