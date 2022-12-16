@@ -38,7 +38,7 @@ async function run() {
         Office.context.document.getFilePropertiesAsync(async function (asyncResult) {
           var inkanName = $("#name").val();
           var fileName;
-          if (asyncResult.value.url == "" || asyncResult.value.url === undefined) {
+          if (asyncResult.value.url === undefined || asyncResult.value.url == "") {
             fileName = '未保存';
           } else {
             fileName = fileUrl.match(".+/(.+?)([\?#;].*)?$")[1];
