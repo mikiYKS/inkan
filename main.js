@@ -39,7 +39,7 @@ async function run() {
           var inkanName = $("#name").val();
           context.workbook.load("name");
           await context.sync();
-          if (context.workbook.name == "") {
+          if (context.workbook.name == "Book" + /^([1-9]\d*|0)$/) {
             var fileName = '未保存';
           } else {
             var fileName = context.workbook.name;
