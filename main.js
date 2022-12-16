@@ -39,7 +39,9 @@ async function run() {
           var inkanName = $("#name").val();
           context.workbook.load("name");
           await context.sync();
-          if (context.workbook.name == "Book" + /^([1-9]\d*|0)$/) {
+          const alligator = ["XLSX", "XLSM", "XLSB", "XLS", "XLTX", "XLTM", "XLT"];
+          const ext = context.workbook.name.split('.').pop().toUpperCase();
+          if (alligator.indexOf(ext) == -1) {
             var fileName = '未保存';
           } else {
             var fileName = context.workbook.name;
