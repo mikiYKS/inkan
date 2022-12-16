@@ -36,10 +36,9 @@ async function run() {
       //ログ出力
       $(function () {
         Office.context.document.getFilePropertiesAsync(async function (asyncResult) {
-          var fileUrl = asyncResult.value.url;
           var inkanName = $("#name").val();
           var fileName;
-          if (fileUrl == "") {
+          if (asyncResult.value.url == "" || asyncResult.value.url === undefined) {
             fileName = '未保存';
           } else {
             fileName = fileUrl.match(".+/(.+?)([\?#;].*)?$")[1];
