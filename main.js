@@ -122,7 +122,7 @@ async function inkanOnCanvas() {
 //アクティブセルに印影貼り付け
 async function insertImage(base64img) {
   await Excel.run(async (context) => {
-    const shapes =context.workbook.worksheets.getActiveWorksheet().shapes;
+    const shapes = context.workbook.worksheets.getActiveWorksheet().shapes;
     const cell = context.workbook.getActiveCell();
     cell.load("left").load("top");
     await context.sync();
@@ -130,6 +130,7 @@ async function insertImage(base64img) {
     shpStampImage.name = "印鑑";
     shpStampImage.left = cell.left;
     shpStampImage.top = cell.top;
+    shpStampImage.scaleHeight(0.5, "OriginalSize");
     await context.sync();
   });
 }
