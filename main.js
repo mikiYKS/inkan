@@ -1,12 +1,7 @@
-Office.onReady(function () {
+$(document).ready(function () {
+  getUser();
   var dt = new Date();
   var txtDate = dt.getFullYear().toString() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
-  var authenticator;
-  var client_id = "39321d77-1772-4ff8-a0e0-07eb83f2e4f5";
-  var redirect_url = "https://mikiyks.github.io/inkan/";
-  var scope;
-  var access_token;
-  getUser();
   $("#date").val(txtDate);
   $("#run").click(() => tryCatch(run));
   //日付不要にチェック入れたら日付グレーアウト
@@ -150,7 +145,11 @@ Office.initialize = function (reason) {
 };
 
 async function getUser() {
-  scope = "https://graph.microsoft.com/user.read";
+  var authenticator;
+  var client_id = "39321d77-1772-4ff8-a0e0-07eb83f2e4f5";
+  var redirect_url = "https://mikiyks.github.io/inkan/";
+  var scope = "https://graph.microsoft.com/user.read";
+  var access_token;
   authenticator = new OfficeHelpers.Authenticator();
   //access_token取得
   authenticator.endpoints.registerMicrosoftAuth(client_id, {
@@ -187,7 +186,11 @@ async function getUser() {
 
 //SharePointListにログ出力
 function inkanLog(inkanName, inkanFile) {
-  scope = "https://graph.microsoft.com/Sites.ReadWrite.All";
+  var authenticator;
+  var client_id = "39321d77-1772-4ff8-a0e0-07eb83f2e4f5";
+  var redirect_url = "https://mikiyks.github.io/inkan/";
+  var scope = "https://graph.microsoft.com/Sites.ReadWrite.All";
+  var access_token;
   authenticator = new OfficeHelpers.Authenticator();
   //access_token取得
   authenticator.endpoints.registerMicrosoftAuth(client_id, {
