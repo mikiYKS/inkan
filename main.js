@@ -1,12 +1,11 @@
-var dt = new Date();
-var txtDate = dt.getFullYear().toString() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
-var authenticator;
-var client_id = "39321d77-1772-4ff8-a0e0-07eb83f2e4f5";
-var redirect_url = "https://mikiyks.github.io/inkan/";
-var scope;
-var access_token;
-
 $(document).ready(function () {
+  var dt = new Date();
+  var txtDate = dt.getFullYear().toString() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
+  var authenticator;
+  var client_id = "39321d77-1772-4ff8-a0e0-07eb83f2e4f5";
+  var redirect_url = "https://mikiyks.github.io/inkan/";
+  var scope;
+  var access_token;
   getUser();
   $("#date").val(txtDate);
   $("#run").click(() => tryCatch(run));
