@@ -1,7 +1,5 @@
 $(document).ready(function () {
-
   getUser();
-
   var dt = new Date();
   var txtDate = dt.getFullYear().toString() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
   $("#date").val(txtDate);
@@ -18,40 +16,30 @@ $(document).ready(function () {
 });
 
 async function run() {
-  await Excel.run(async (context) => {
-    //名前が空なら処理なし
-    if (
-      !$("#name")
-        .val()
-        .toString()
-    ) {
-    } else {
-      //アクティブセルの位置取得
-      const cell = context.workbook.getActiveCell();
-      cell.load("left").load("top");
-      await context.sync();
-      //印鑑生成実行
-      onWorkSheetSingleClick(cell.left, cell.top);
-
-      //ログ出力
-      $(function () {
-        Excel.run(async (context) => {
-          var inkanName = $("#name").val();
-          context.workbook.load("name");
-          await context.sync();
-          const alligator = ["XLSX", "XLSM", "XLSB", "XLS", "XLTX", "XLTM", "XLT"];
-          const ext = context.workbook.name.split('.').pop().toUpperCase();
-          if (alligator.indexOf(ext) == -1) {
-            var fileName = '未保存エクセル';
-          } else {
-            var fileName = context.workbook.name;
-          };
-          inkanLog(inkanName, fileName);
-        });
+  //名前が空なら処理なし
+  if (
+    !$("#name").val()
+  ) {
+  } else {
+    //印鑑生成実行
+    inkanOnCanvas();
+    //ログ出力
+    $(function () {
+      Excel.run(async (context) => {
+        var inkanName = $("#name").val();
+        context.workbook.load("name");
+        await context.sync();
+        const alligator = ["XLSX", "XLSM", "XLSB", "XLS", "XLTX", "XLTM", "XLT"];
+        const ext = context.workbook.name.split('.').pop().toUpperCase();
+        if (alligator.indexOf(ext) == -1) {
+          var fileName = '未保存エクセル';
+        } else {
+          var fileName = context.workbook.name;
+        };
+        inkanLog(inkanName, fileName);
       });
-
-    }
-  });
+    });
+  }
 }
 
 async function tryCatch(callback) {
@@ -62,147 +50,93 @@ async function tryCatch(callback) {
   }
 }
 
-//アクティブセルに押印
-async function onWorkSheetSingleClick(x, y) {
-  await Excel.run(async (context) => {
-    //変数宣言//
-    var fontName = "HGS行書体"; //名前テキストのフォント
-    var objectColor = "FF2000"; //線色・文字色
-    var txtName = $("#name")
+//キャンバスに印影作成
+async function inkanOnCanvas() {
+  var canvas = document.querySelector("#canvas");
+  var ctx = canvas.getContext("2d");
+  var nametxt = $("#name")
+    .val()
+    .toString()
+    .replace("（", "")
+    .replace("(", "")
+    .replace("）", "")
+    .replace(")", "")
+    .replace(" ", "")
+    .replace("　", "");
+  var lenname = nametxt.length;
+  var fsize = 55 - (7 / 3) * (lenname - 1);
+  var dateText =
+    "'" +
+    $("#date")
       .val()
-      .toString(); //名前テキスト
-    var lenName = txtName.length; //名前文字数
-    if (lenName < 3) {
-      var fontSize = 22;
-    } else {
-      var fontSize = 19;
-    } //名前文字数でフォントサイズ調整
-    const sheet = context.workbook.worksheets.getActiveWorksheet();
-    const shapes = sheet.shapes;
+      .toString()
+      .slice(2, 4) +
+    "." +
+    $("#date")
+      .val()
+      .toString()
+      .slice(5, 7) +
+    "." +
+    $("#date")
+      .val()
+      .toString()
+      .slice(8, 10);
 
-    //印鑑枠作成
-    const ellipse = shapes.addGeometricShape(Excel.GeometricShapeType.ellipse);
-    if (lenName < 3) {
-      ellipse.left = 14.3;
-      ellipse.top = 15.9;
-    } else {
-      ellipse.left = 10;
-      ellipse.top = 10;
-    }
-    ellipse.height = 31.1;
-    ellipse.width = 31.1;
-    ellipse.fill.transparency = 1;
-    ellipse.lineFormat.weight = 1;
-    ellipse.lineFormat.color = objectColor;
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.font = fsize + "pt HGS行書体, HGS明朝E";
+  var namewidth = ctx.measureText(nametxt).width;
 
-    //日付テキスト, 日付不要ならスルー
-    if ($("#dateCheckBox").prop("checked")) {
-    } else {
-      var shpDateText = shapes.addGeometricShape(Excel.GeometricShapeType.rectangle);
-      if (lenName < 3) {
-        shpDateText.left = 5.5;
-        shpDateText.top = 47.9;
-      } else {
-        shpDateText.left = 0.6;
-        shpDateText.top = 42;
-      }
-      shpDateText.height = 12;
-      shpDateText.width = 50;
-      shpDateText.textFrame.leftMargin = 0;
-      shpDateText.textFrame.bottomMargin = 0;
-      shpDateText.textFrame.rightMargin = 0;
-      shpDateText.textFrame.topMargin = 0;
-      shpDateText.fill.transparency = 1;
-      shpDateText.lineFormat.transparency = 1;
-      shpDateText.textFrame.verticalAlignment = Excel.ShapeTextVerticalAlignment.middle;
-      shpDateText.textFrame.horizontalAlignment = Excel.ShapeTextHorizontalAlignment.center;
-      shpDateText.textFrame.verticalOverflow = Excel.ShapeTextVerticalOverflow.overflow;
-      shpDateText.textFrame.horizontalOverflow = Excel.ShapeTextHorizontalOverflow.overflow;
-      var trngDateText = shpDateText.textFrame.textRange;
-      trngDateText.font.color = objectColor;
-      trngDateText.font.name = "Calibri"; //fontName;
-      trngDateText.font.size = 8;
-      trngDateText.text =
-        "'" +
-        $("#date")
-          .val()
-          .toString()
-          .slice(2, 4) +
-        "." +
-        $("#date")
-          .val()
-          .toString()
-          .slice(5, 7) +
-        "." +
-        $("#date")
-          .val()
-          .toString()
-          .slice(8, 10);
-    }
+  ctx.setTransform(1, 0, 0, 80 / namewidth, 0, (80 / namewidth) * 65.332 + 6.5335);
+  ctx.font = fsize + "pt HGS行書体, HGS明朝E";
+  ctx.fillStyle = "rgba(255, 32, 0)";
+  tategaki(ctx, nametxt, 0);
 
-    //名前テキスト
-    const shpNameText = shapes.addGeometricShape(Excel.GeometricShapeType.rectangle);
-    if (lenName < 3) {
-      shpNameText.height = lenName * 23;
-    } else {
-      shpNameText.height = lenName * 20;
-    }
-    shpNameText.width = 27.7;
-    shpNameText.fill.transparency = 1;
-    shpNameText.lineFormat.transparency = 1;
-    shpNameText.textFrame.verticalAlignment = Excel.ShapeTextVerticalAlignment.middle;
-    shpNameText.textFrame.horizontalAlignment = Excel.ShapeTextHorizontalAlignment.center;
-    shpNameText.textFrame.leftMargin = 0;
-    shpNameText.textFrame.bottomMargin = 0;
-    shpNameText.textFrame.rightMargin = 0;
-    shpNameText.textFrame.topMargin = 0;
-    shpNameText.textFrame.verticalOverflow = Excel.ShapeTextVerticalOverflow.overflow;
-    shpNameText.textFrame.horizontalOverflow = Excel.ShapeTextHorizontalOverflow.overflow;
-    shpNameText.textFrame.orientation = "EastAsianVertical";
-    const trngNameText = shpNameText.textFrame.textRange;
-    trngNameText.font.color = objectColor;
-    trngNameText.font.name = fontName;
-    trngNameText.font.size = fontSize;
-    trngNameText.text = txtName;
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.beginPath();
+  ctx.arc(50, 50, 45, 0, Math.PI * 2, true);
+  ctx.strokeStyle = "rgba(255, 32, 0)";
+  ctx.lineWidth = 2;
+  ctx.stroke();
 
-    //名前テキストの画像化
-    const preImgNameText = shpNameText.getAsImage(Excel.PictureFormat.png);
+  if ($("#dateCheckBox").prop("checked")) {
+  } else {
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.font = 16 + "pt Calibri bold";
+    ctx.fillStyle = "rgba(255, 32, 0)";
+    ctx.fillText(dateText, 50 - ctx.measureText(dateText).width / 2, 118);
+  };
+
+  var nameBase64Img = canvas.toDataURL().replace(/^.*,/, "");
+
+  insertImage(nameBase64Img);
+
+  ctx.clearRect(0, 0, 100, 120);
+}
+
+//アクティブセルに印影貼り付け
+async function insertImage(base64img) {
+  await Excel.run(async (context) => {
+    const shapes = context.workbook.worksheets.getActiveWorksheet().shapes;
+    const cell = context.workbook.getActiveCell();
+    cell.load("left").load("top");
     await context.sync();
-    const imgNameText = shapes.addImage(preImgNameText.value);
-    if (lenName < 3) {
-      imgNameText.height = 52;
-      imgNameText.left = 2.6;
-      imgNameText.top = 6;
-    } else {
-      imgNameText.height = 40;
-      imgNameText.left = 1.5;
-      imgNameText.top = 6;
-    }
-
-    //グループ+画像化
-    if ($("#dateCheckBox").prop("checked")) {
-      var shpStamp = shapes.addGroup([ellipse, imgNameText]);
-    } else {
-      var shpStamp = shapes.addGroup([ellipse, shpDateText, imgNameText]);
-    }
-    const shpStampPreImage = shpStamp.getAsImage(Excel.PictureFormat.png);
-    await context.sync();
-    const shpStampImage = shapes.addImage(shpStampPreImage.value);
+    const shpStampImage = shapes.addImage(base64img);
     shpStampImage.name = "印鑑";
-
-    //素材削除
-    shpStamp.group.ungroup();
-    ellipse.delete();
-    if ($("#dateCheckBox").prop("checked")) {
-    } else {
-      shpDateText.delete();
-    }
-    imgNameText.delete();
-    shpNameText.delete();
-
-    shpStampImage.left = x;
-    shpStampImage.top = y;
+    shpStampImage.left = cell.left;
+    shpStampImage.top = cell.top;
+    shpStampImage.scaleHeight(0.5, "OriginalSize");
     await context.sync();
+  });
+}
+
+//縦書き変換
+function tategaki(context, text, y) {
+  var textList = text.split("\n");
+  var lineHeight = context.measureText("あ").width;
+  textList.forEach(function (elm, i) {
+    Array.prototype.forEach.call(elm, function (ch, j) {
+      context.fillText(ch, 50 - lineHeight / 2, y + lineHeight * j);
+    });
   });
 }
 
@@ -216,21 +150,19 @@ async function getUser() {
   var redirect_url = "https://mikiyks.github.io/inkan/";
   var scope = "https://graph.microsoft.com/user.read";
   var access_token;
-
   authenticator = new OfficeHelpers.Authenticator();
-
   //access_token取得
   authenticator.endpoints.registerMicrosoftAuth(client_id, {
     redirectUrl: redirect_url,
     scope: scope
   });
-
+  //認証
   authenticator
     .authenticate(OfficeHelpers.DefaultEndpoints.Microsoft)
     .then(function (token) {
       access_token = token.access_token;
       $("#exec").prop("disabled", false);
-      //API呼び出し
+      //API呼び出し　ユーザー情報取得
       $(function () {
         $.ajax({
           url: "https://graph.microsoft.com/v1.0/me",
@@ -259,18 +191,16 @@ function inkanLog(inkanName, inkanFile) {
   var redirect_url = "https://mikiyks.github.io/inkan/";
   var scope = "https://graph.microsoft.com/Sites.ReadWrite.All";
   var access_token;
-
   authenticator = new OfficeHelpers.Authenticator();
-
   //access_token取得
   authenticator.endpoints.registerMicrosoftAuth(client_id, {
     redirectUrl: redirect_url,
     scope: scope
   });
-
+  //認証
   authenticator.authenticate(OfficeHelpers.DefaultEndpoints.Microsoft).then(function (token) {
     access_token = token.access_token;
-
+    //API呼び出し印鑑ログ投稿
     $(function () {
       $.ajax({
         url:
