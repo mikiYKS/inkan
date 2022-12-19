@@ -125,6 +125,7 @@ async function insertImage(base64img) {
     shpStampImage.left = cell.left;
     shpStampImage.top = cell.top;
     shpStampImage.height = 45;
+    shpStampImage.width = 37.8;
     await context.sync();
   });
 }
