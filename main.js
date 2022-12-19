@@ -124,7 +124,7 @@ async function insertImage(base64img) {
     shpStampImage.name = "印鑑";
     shpStampImage.left = cell.left;
     shpStampImage.top = cell.top;
-    shpStampImage.scaleHeight(0.5, "OriginalSize");
+    shpStampImage.height = 45;
     await context.sync();
   });
 }
