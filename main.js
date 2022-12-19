@@ -129,7 +129,6 @@ async function insertImage(base64img) {
     await context.sync();
     const shpStampImage = shapes.addImage(base64img);
     shpStampImage.name = "印鑑";
-    shpStampImage.height = 43;
     shpStampImage.left = cell.left;
     shpStampImage.top = cell.top;
     await context.sync();
