@@ -122,6 +122,7 @@ async function inkanOnCanvas() {
 //アクティブセルに印影貼り付け
 async function insertImage(base64img) {
   await Excel.run(async (context) => {
+    const shapes =context.workbook.worksheets.getActiveWorksheet().shapes;
     const cell = context.workbook.getActiveCell();
     cell.load("left").load("top");
     await context.sync();
