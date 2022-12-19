@@ -1,4 +1,4 @@
-Excel.onReady(function () {
+Office.onReady(function () {
   var dt = new Date();
   var txtDate = dt.getFullYear().toString() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
   var authenticator;
