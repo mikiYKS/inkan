@@ -1,4 +1,4 @@
-$(document).ready(function () {
+Office.onReady(function () {
   getUser();
   var dt = new Date();
   var txtDate = dt.getFullYear().toString() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
