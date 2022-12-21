@@ -149,7 +149,7 @@ Office.initialize = function (reason) {
 
 function getUser() {
   var authenticator;
-  var client_id = "39321d77-1772-4ff8-a0e0-07eb83f2e4f5";
+  var client_id = "1015a2ef-9182-4916-8802-4d1e836e0533";
   var redirect_url = "https://mikiyks.github.io/inkan/";
   var scope = "https://graph.microsoft.com/User.ReadBasic.All";
   var access_token;
@@ -168,14 +168,14 @@ function getUser() {
       //API呼び出し　ユーザー情報取得
       $(function () {
         $.ajax({
-          url: "https://graph.microsoft.com/v1.0/me/surname",
+          url: "https://graph.microsoft.com/v1.0/me",
           type: "GET",
           beforeSend: function (xhr) {
             xhr.setRequestHeader("Authorization", "Bearer " + access_token);
           },
           success: function (data) {
             //取得した苗字をセット
-            $("#name").val(data.value);
+            $("#name").val(data.surname);
           },
           error: function (data) {
             console.log(data);
@@ -190,7 +190,7 @@ function getUser() {
 //SharePointListにログ出力
 function inkanLog(inkanName, inkanFile) {
   var authenticator;
-  var client_id = "39321d77-1772-4ff8-a0e0-07eb83f2e4f5";
+  var client_id = "1015a2ef-9182-4916-8802-4d1e836e0533";
   var redirect_url = "https://mikiyks.github.io/inkan/";
   var scope = "https://graph.microsoft.com/Sites.ReadWrite.All";
   var access_token;
