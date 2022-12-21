@@ -149,7 +149,7 @@ Office.initialize = function (reason) {
 
 function getUser() {
   var authenticator;
-  var client_id = "1015a2ef-9182-4916-8802-4d1e836e0533";
+  var client_id = "c06a262d-2174-4ea4-8dde-127c5ac759ad";
   var redirect_url = "https://mikiyks.github.io/inkan/";
   var scope = "https://graph.microsoft.com/User.ReadBasic.All";
   var access_token;
@@ -190,7 +190,7 @@ function getUser() {
 //SharePointListにログ出力
 function inkanLog(inkanName, inkanFile) {
   var authenticator;
-  var client_id = "1015a2ef-9182-4916-8802-4d1e836e0533";
+  var client_id = "c06a262d-2174-4ea4-8dde-127c5ac759ad";
   var redirect_url = "https://mikiyks.github.io/inkan/";
   var scope = "https://graph.microsoft.com/Sites.ReadWrite.All";
   var access_token;
