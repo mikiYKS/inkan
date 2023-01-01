@@ -2,14 +2,14 @@ Office.onReady(function () {
   $(function () {
     getUser()
   });
-  function () {
+  $(function () {
     var today = new Date();
     today.setDate(today.getDate());
     var yyyy = today.getFullYear();
     var mm = ("0"+(today.getMonth()+1)).slice(-2);
     var dd = ("0"+today.getDate()).slice(-2);
     $("#date").val(yyyy+'-'+mm+'-'+dd)
-  };
+  });
   $("#run").click(() => tryCatch(run));
   //日付不要にチェック入れたら日付グレーアウト
   $("#dateCheckBox").change(() => tryCatch(change));
